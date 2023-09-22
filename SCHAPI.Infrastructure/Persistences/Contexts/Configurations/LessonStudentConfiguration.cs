@@ -8,7 +8,10 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
     {
         public void Configure(EntityTypeBuilder<LessonStudent> builder)
         {
-            builder.HasKey(e => new { e.LessonId, e.StudentId });
+            builder.HasKey(e => e.Id);
+
+            builder.HasIndex(e => new { e.LessonId, e.StudentId })
+                .IsUnique();
 
             builder.HasOne(e => e.Lesson)
                 .WithMany()

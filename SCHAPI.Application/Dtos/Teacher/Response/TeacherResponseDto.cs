@@ -1,8 +1,8 @@
-﻿namespace SCHAPI.Domain.Entities
+﻿namespace SCHAPI.Application.Dtos.Teacher.Response
 {
-    public class Teacher : BaseEntity
+    public class TeacherResponseDto
     {
-        public string TeacherCode { get; set; }
+        public int TeacherId { get; set; }
 
         public string Name { get; set; }
 

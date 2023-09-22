@@ -10,10 +10,7 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Code)
-                .HasColumnName("StudentCode");
-
-            builder.HasIndex(e => e.Code)
+            builder.HasIndex(e => e.StudentCode)
                 .IsUnique();
 
             builder.HasIndex(e => e.Name)
@@ -34,7 +31,7 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.Property(e => e.Email)
                 .HasMaxLength(100);
 
-            builder.Property(e => e.Code)
+            builder.Property(e => e.StudentCode)
                 .HasComputedColumnSql("CONCAT('ALU', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
         }
     }

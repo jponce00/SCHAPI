@@ -1,6 +1,6 @@
 ﻿namespace SCHAPI.Domain.Entities
 {
-    public class LessonStudent
+    public class LessonStudent : BaseEntity
     {
         public int LessonId { get; set; }
 

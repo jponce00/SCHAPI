@@ -1,10 +1,8 @@
 ﻿namespace SCHAPI.Domain.Entities
 {
-    public class Lesson
+    public class Lesson : BaseEntity
     {
-        public int Id { get; set; }
-
-        public string Code { get; set; }
+        public string LessonCode { get; set; }
 
         public int StartHour { get; set; }
 

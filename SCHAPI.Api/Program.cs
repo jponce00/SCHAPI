@@ -1,11 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using SCHAPI.Api.Util;
+using SCHAPI.Application.Extensions;
 using SCHAPI.Infrastructure.Persistences.Contexts;
+using SCHAPI.Infrastructure.Persistences.Interfaces;
+using SCHAPI.Infrastructure.Persistences.Repositories;
+using WatchDog;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-
 builder.Services.AddDbContext<SCHAPIContext>(options =>
 {
     options.UseSqlServer(configuration.GetConnectionString("SqlServer"), s =>
@@ -14,6 +18,11 @@ builder.Services.AddDbContext<SCHAPIContext>(options =>
         s.MigrationsHistoryTable("__EFMigrationsHistory", "dbo");
     });
 });
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+builder.Services.AddIjectionApplication();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -29,10 +38,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseWatchDogExceptionLogger();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseWatchDog(config =>
+{
+    config.WatchPageUsername = configuration.GetSection("WatchDogOptions:UserName").Value;
+    config.WatchPagePassword = configuration.GetSection("WatchDogOptions:Password").Value;
+});
+
+await app.Seed();
 app.Run();

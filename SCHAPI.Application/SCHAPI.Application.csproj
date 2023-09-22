@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Validators\" />
-    <Folder Include="Services\" />
+    <Folder Include="Dtos\Classroom\" />
+    <Folder Include="Dtos\Lesson\" />
+    <Folder Include="Dtos\LessonStudent\" />
+    <Folder Include="Dtos\Subject\" />
+    <Folder Include="Dtos\Student\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+    <PackageReference Include="WatchDog.NET" Version="1.4.10" />
   </ItemGroup>
 
   <ItemGroup>

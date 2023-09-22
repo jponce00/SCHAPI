@@ -10,11 +10,8 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
         {
             builder.HasKey(e => e.Id);
 
-            builder.HasIndex(e => e.Code)
+            builder.HasIndex(e => e.LessonCode)
                 .IsUnique();
-
-            builder.Property(e => e.Code)
-                .HasColumnName("LessonCode");
 
             builder.HasIndex(e => new { e.StartHour, e.TeacherId, e.ClassroomId })
                 .IsUnique();
@@ -33,6 +30,9 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
                 .WithMany()
                 .HasForeignKey(e => e.ClassroomId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(e => e.LessonCode)
+                .HasComputedColumnSql("CONCAT('CLA', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
         }
     }
 }
