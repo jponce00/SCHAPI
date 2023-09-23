@@ -10,7 +10,6 @@
     <Folder Include="Dtos\Classroom\" />
     <Folder Include="Dtos\Lesson\" />
     <Folder Include="Dtos\LessonStudent\" />
-    <Folder Include="Dtos\Subject\" />
   </ItemGroup>
 
   <ItemGroup>
