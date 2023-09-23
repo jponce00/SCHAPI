@@ -13,20 +13,11 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.HasIndex(e => e.StudentCode)
                 .IsUnique();
 
-            builder.HasIndex(e => e.Name)
-                .IsUnique();
-
             builder.Property(e => e.Name)
                 .HasMaxLength(200);
 
-            builder.HasIndex(e => e.Phone)
-                .IsUnique();
-
             builder.Property(e => e.Phone)
                 .HasMaxLength(50);
-
-            builder.HasIndex(e => e.Email)
-                .IsUnique();
 
             builder.Property(e => e.Email)
                 .HasMaxLength(100);

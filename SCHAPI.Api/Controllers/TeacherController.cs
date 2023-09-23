@@ -25,6 +25,14 @@ namespace SCHAPI.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("Select")]
+        public async Task<IActionResult> ListSelectTeachers()
+        {
+            var response = await _teacherApplication.ListSelectTeachers();
+
+            return Ok(response);
+        }
+
         [HttpGet("{teacherId:int}")]
         public async Task<IActionResult> TeacherById(int teacherId)
         {
@@ -49,7 +57,7 @@ namespace SCHAPI.Api.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("Remove/{teacherId:int}")]
+        [HttpPut("Remove/{teacherId:int}")]
         public async Task<IActionResult> RemoveTeacher(int teacherId)
         {
             var response = await _teacherApplication.RemoveTeacher(teacherId);

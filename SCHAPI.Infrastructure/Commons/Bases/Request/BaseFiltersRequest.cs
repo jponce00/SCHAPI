@@ -5,5 +5,7 @@
         public int? NumFilter { get; set; } = null;
 
         public string? TextFilter { get; set; } = null;
+
+        public int? StateFilter { get; set; } = null;
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace SCHAPI.Application.Dtos.Teacher.Request
+﻿namespace SCHAPI.Application.Dtos.Student.Request
 {
-    public class TeacherRequestDto
+    public class StudentRequestDto
     {
         public string? Name { get; set; }
 

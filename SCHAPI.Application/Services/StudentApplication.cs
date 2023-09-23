@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using SCHAPI.Application.Commons.Bases;
-using SCHAPI.Application.Dtos.Teacher.Request;
-using SCHAPI.Application.Dtos.Teacher.Response;
+using SCHAPI.Application.Dtos.Student.Request;
+using SCHAPI.Application.Dtos.Student.Response;
 using SCHAPI.Application.Interfaces;
-using SCHAPI.Application.Validators.Teacher;
+using SCHAPI.Application.Validators.Student;
 using SCHAPI.Domain.Entities;
 using SCHAPI.Infrastructure.Commons.Bases.Request;
 using SCHAPI.Infrastructure.Commons.Bases.Response;
@@ -13,37 +13,37 @@ using WatchDog;
 
 namespace SCHAPI.Application.Services
 {
-    public class TeacherApplication : ITeacherApplication
+    public class StudentApplication : IStudentApplication
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly TeacherRequestValidator _requestValidation;
-        private readonly TeacherEntityValidator _entityValidation;
+        private readonly StudentRequestValidator _requestValidation;
+        private readonly StudentEntityValidator _entityValidation;
 
-        public TeacherApplication(
+        public StudentApplication(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            TeacherRequestValidator requestValidation,
-            TeacherEntityValidator entityValidation)
+            StudentRequestValidator validationRules,
+            StudentEntityValidator entityValidation)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _requestValidation = requestValidation;
+            _requestValidation = validationRules;
             _entityValidation = entityValidation;
         }
 
-        public async Task<BaseResponse<BaseEntityResponse<TeacherResponseDto>>> ListTeachers(BaseFiltersRequest filters)
+        public async Task<BaseResponse<BaseEntityResponse<StudentResponseDto>>> ListStudents(BaseFiltersRequest filters)
         {
-            var response = new BaseResponse<BaseEntityResponse<TeacherResponseDto>>();
+            var response = new BaseResponse<BaseEntityResponse<StudentResponseDto>>();
 
             try
             {
-                var teachers = await _unitOfWork.Teacher.ListTeachers(filters);
+                var students = await _unitOfWork.Student.ListStudents(filters);
 
-                if (teachers != null)
+                if (students != null)
                 {
                     response.IsSuccess = true;
-                    response.Data = _mapper.Map<BaseEntityResponse<TeacherResponseDto>>(teachers);
+                    response.Data = _mapper.Map<BaseEntityResponse<StudentResponseDto>>(students);
                     response.Message = ReplyMessage.MESSAGE_QUERY;
                 }
                 else
@@ -63,18 +63,18 @@ namespace SCHAPI.Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<IEnumerable<TeacherSelectResponseDto>>> ListSelectTeachers()
+        public async Task<BaseResponse<StudentResponseDto>> StudentById(int studentId)
         {
-            var response = new BaseResponse<IEnumerable<TeacherSelectResponseDto>>();
+            var response = new BaseResponse<StudentResponseDto>();
 
             try
             {
-                var teachers = await _unitOfWork.Teacher.GetAllAsync();
+                var student = await _unitOfWork.Student.GetByIdAsync(studentId);
 
-                if (teachers != null)
+                if (student != null)
                 {
                     response.IsSuccess = true;
-                    response.Data = _mapper.Map<IEnumerable<TeacherSelectResponseDto>>(teachers);
+                    response.Data = _mapper.Map<StudentResponseDto>(student);
                     response.Message = ReplyMessage.MESSAGE_QUERY;
                 }
                 else
@@ -94,38 +94,7 @@ namespace SCHAPI.Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<TeacherResponseDto>> TeacherById(int teacherId)
-        {
-            var response = new BaseResponse<TeacherResponseDto>();
-
-            try
-            {
-                var teacher = await _unitOfWork.Teacher.GetByIdAsync(teacherId);
-
-                if (teacher != null)
-                {
-                    response.IsSuccess = true;
-                    response.Data = _mapper.Map<TeacherResponseDto>(teacher);
-                    response.Message = ReplyMessage.MESSAGE_QUERY;
-                }
-                else
-                {
-                    response.IsSuccess = false;
-                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
-
-                WatchLogger.Log(ex.Message);
-            }
-
-            return response;
-        }
-
-        public async Task<BaseResponse<bool>> RegisterTeacher(TeacherRequestDto requestDto)
+        public async Task<BaseResponse<bool>> RegisterStudent(StudentRequestDto requestDto)
         {
             var response = new BaseResponse<bool>();
 
@@ -141,9 +110,9 @@ namespace SCHAPI.Application.Services
                     return response;
                 }
 
-                var teacher = _mapper.Map<Teacher>(requestDto);
+                var student = _mapper.Map<Student>(requestDto);
 
-                validationResult = await _entityValidation.ValidateAsync(teacher);
+                validationResult = await _entityValidation.ValidateAsync(student);
                 if (!validationResult.IsValid)
                 {
                     response.IsSuccess = false;
@@ -153,7 +122,7 @@ namespace SCHAPI.Application.Services
                     return response;
                 }
 
-                response.Data = await _unitOfWork.Teacher.RegisterAsync(teacher);
+                response.Data = await _unitOfWork.Student.RegisterAsync(student);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -176,7 +145,7 @@ namespace SCHAPI.Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<bool>> EditTeacher(int teacherId, TeacherRequestDto requestDto)
+        public async Task<BaseResponse<bool>> EditStudent(int studentId, StudentRequestDto requestDto)
         {
             var response = new BaseResponse<bool>();
 
@@ -192,8 +161,8 @@ namespace SCHAPI.Application.Services
                     return response;
                 }
 
-                var teacherEdit = await _unitOfWork.Teacher.GetByIdAsync(teacherId);
-                if (teacherEdit == null)
+                var studentEdit = await _unitOfWork.Student.GetByIdAsync(studentId);
+                if (studentEdit == null)
                 {
                     response.IsSuccess = false;
                     response.Message = ReplyMessage.MESSAGE_DOESNOT_EXIST;
@@ -201,10 +170,10 @@ namespace SCHAPI.Application.Services
                     return response;
                 }
 
-                var teacher = _mapper.Map<Teacher>(requestDto);
-                teacher.Id = teacherId;
+                var student = _mapper.Map<Student>(requestDto);
+                student.Id = studentId;
 
-                validationResult = await _entityValidation.ValidateAsync(teacher);
+                validationResult = await _entityValidation.ValidateAsync(student);
                 if (!validationResult.IsValid)
                 {
                     response.IsSuccess = false;
@@ -214,7 +183,7 @@ namespace SCHAPI.Application.Services
                     return response;
                 }
 
-                response.Data = await _unitOfWork.Teacher.EditAsync(teacher);
+                response.Data = await _unitOfWork.Student.EditAsync(student);
                 if (response.Data)
                 {
                     response.IsSuccess = true;
@@ -237,14 +206,15 @@ namespace SCHAPI.Application.Services
             return response;
         }
 
-        public async Task<BaseResponse<bool>> RemoveTeacher(int teacherId)
+        public async Task<BaseResponse<bool>> RemoveStudent(int studentId)
         {
             var response = new BaseResponse<bool>();
 
             try
             {
-                var teacher = await TeacherById(teacherId);
-                if (teacher.Data == null)
+                var student = await _unitOfWork.Student.GetByIdAsync(studentId);
+
+                if (student == null)
                 {
                     response.IsSuccess = false;
                     response.Message = ReplyMessage.MESSAGE_DOESNOT_EXIST;
@@ -252,7 +222,8 @@ namespace SCHAPI.Application.Services
                     return response;
                 }
 
-                response.Data = await _unitOfWork.Teacher.RemoveAsync(teacherId);
+                response.Data = await _unitOfWork.Student.RemoveAsync(studentId);
+
                 if (response.Data)
                 {
                     response.IsSuccess = true;

@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
 using SCHAPI.Application.Dtos.Teacher.Request;
+using SCHAPI.Infrastructure.Persistences.Contexts;
 
 namespace SCHAPI.Application.Validators.Teacher
 {
-    public class TeacherValidator : AbstractValidator<TeacherRequestDto>
+    public class TeacherRequestValidator : AbstractValidator<TeacherRequestDto>
     {
-        public TeacherValidator()
+        public TeacherRequestValidator()
         {
             RuleFor(t => t.Name)
                 .NotNull().WithMessage("El campo Nombre no puede ser nulo.")

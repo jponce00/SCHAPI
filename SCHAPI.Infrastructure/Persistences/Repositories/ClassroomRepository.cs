@@ -17,7 +17,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
             var response = new BaseEntityResponse<Classroom>();
 
-            var classrooms = GetEntityQuery();
+            var classrooms = GetEntityQuery(cl => cl.AuditDeleteUser == null && cl.AuditDeleteDate == null).AsNoTracking();
 
             if (filters.NumFilter != null && !string.IsNullOrEmpty(filters.TextFilter))
             {
@@ -27,6 +27,11 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
                         classrooms = classrooms.Where(c => c.Name.Contains(filters.TextFilter));
                         break;
                 }
+            }
+
+            if (filters.StateFilter != null)
+            {
+                classrooms = classrooms.Where(cl => cl.State.Equals(filters.StateFilter));
             }
 
             filters.Sort ??= "Id";

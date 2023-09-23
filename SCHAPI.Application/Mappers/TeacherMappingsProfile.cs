@@ -18,6 +18,10 @@ namespace SCHAPI.Application.Mappers
                 .ReverseMap();
 
             CreateMap<TeacherRequestDto, Teacher>();
+
+            CreateMap<Teacher, TeacherSelectResponseDto>()
+                .ForMember(t => t.TeacherId, t => t.MapFrom(y => y.Id))
+                .ReverseMap();
         }
     }
 }

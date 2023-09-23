@@ -1,8 +1,8 @@
-﻿namespace SCHAPI.Application.Dtos.Teacher.Response
+﻿namespace SCHAPI.Application.Dtos.Student.Response
 {
-    public class TeacherResponseDto
+    public class StudentResponseDto
     {
-        public int TeacherId { get; set; }
+        public int StudentId { get; set; }
 
         public string Name { get; set; }
 

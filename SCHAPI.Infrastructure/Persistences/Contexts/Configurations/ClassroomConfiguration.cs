@@ -13,9 +13,6 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.HasIndex(e => e.ClassroomCode)
                 .IsUnique();
 
-            builder.HasIndex(e => e.Name)
-                .IsUnique();
-
             builder.Property(e => e.Name)
                 .HasMaxLength(100);
 

@@ -4,6 +4,7 @@ using SCHAPI.Infrastructure.Commons.Bases.Request;
 using SCHAPI.Infrastructure.Helpers;
 using SCHAPI.Infrastructure.Persistences.Contexts;
 using SCHAPI.Infrastructure.Persistences.Interfaces;
+using SCHAPI.Utilities.Static;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
@@ -22,7 +23,9 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var getAll = await _entity.ToListAsync();
+            var getAll = await _entity
+                .Where(e => e.State.Equals((int)StateTypes.Active) && e.AuditDeleteUser == null && e.AuditDeleteDate == null)
+                .AsNoTracking().ToListAsync();
 
             return getAll;
         }
@@ -36,6 +39,9 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
 
         public async Task<bool> RegisterAsync(T entity)
         {
+            entity.AuditCreateUser = 1;
+            entity.AuditCreateDate = DateTime.Now;
+
             await _context.AddAsync(entity);
 
             var recordsAffected = await _context.SaveChangesAsync();
@@ -45,10 +51,14 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
 
         public async Task<bool> EditAsync(T entity)
         {
+            entity.AuditUpdateUser = 1;
+            entity.AuditUpdateDate = DateTime.Now;
+
             _context.Update(entity);
+            _context.Entry(entity).Property(e => e.AuditCreateUser).IsModified = false;
+            _context.Entry(entity).Property(e => e.AuditCreateDate).IsModified = false;
 
             var recordsAffected = await _context.SaveChangesAsync();
-
             return recordsAffected > 0;
         }
 
@@ -56,7 +66,10 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
             T entity = await GetByIdAsync(id);
 
-            _context.Remove(entity);
+            entity!.AuditDeleteUser = 1;
+            entity!.AuditDeleteDate = DateTime.Now;
+
+            _context.Update(entity);
 
             var recordsAffected = await _context.SaveChangesAsync();
             return recordsAffected > 0;
