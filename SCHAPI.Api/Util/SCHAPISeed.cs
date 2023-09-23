@@ -42,6 +42,17 @@ namespace SCHAPI.Api.Util
                         new Classroom { Name = "Aula 5", AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
                         new Classroom { Name = "Aula 6", AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 });
 
+                    await context.Schedules.AddRangeAsync(
+                        new Schedule { StartHour = new TimeSpan(8, 0, 0), EndHour = new TimeSpan(9, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(9, 0, 0), EndHour = new TimeSpan(10, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(10, 0, 0), EndHour = new TimeSpan(11, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(11, 0, 0), EndHour = new TimeSpan(12, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(12, 0, 0), EndHour = new TimeSpan(13, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(13, 0, 0), EndHour = new TimeSpan(14, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(14, 0, 0), EndHour = new TimeSpan(15, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(15, 0, 0), EndHour = new TimeSpan(16, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 },
+                        new Schedule { StartHour = new TimeSpan(16, 0, 0), EndHour = new TimeSpan(17, 0, 0), AuditCreateUser = 1, AuditCreateDate = DateTime.Now, State = 1 });
+
                     await context.SaveChangesAsync();
                 }
             }

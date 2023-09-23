@@ -19,6 +19,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
             var response = new BaseEntityResponse<Lesson>();
 
             var lessons = GetEntityQuery(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null)
+                .Include(l => l.Schedule)
                 .Include(l => l.Teacher)
                 .Include(l => l.Subject)
                 .Include(l => l.Classroom)

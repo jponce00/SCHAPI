@@ -4,7 +4,9 @@
     {
         public string LessonCode { get; set; }
 
-        public int StartHour { get; set; }
+        public int ScheduleId { get; set; }
+
+        public Schedule Schedule { get; set; }
 
         public int TeacherId { get; set; }
 

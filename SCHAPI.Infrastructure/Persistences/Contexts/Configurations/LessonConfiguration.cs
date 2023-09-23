@@ -13,8 +13,16 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.HasIndex(e => e.LessonCode)
                 .IsUnique();
 
-            builder.HasIndex(e => new { e.StartHour, e.TeacherId, e.ClassroomId })
+            builder.HasIndex(e => new { e.ScheduleId, e.TeacherId })
                 .IsUnique();
+
+            builder.HasIndex(e => new { e.ScheduleId, e.ClassroomId })
+                .IsUnique();
+
+            builder.HasOne(e => e.Schedule)
+                .WithMany()
+                .HasForeignKey(e => e.ScheduleId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(e => e.Teacher)
                 .WithMany()

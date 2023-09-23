@@ -22,6 +22,10 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.Property(e => e.Email)
                 .HasMaxLength(100);
 
+            builder.HasMany(e => e.Lessons)
+                .WithOne(e => e.Teacher)
+                .HasForeignKey(e => e.TeacherId);
+
             builder.Property(e => e.TeacherCode)
                 .HasComputedColumnSql("CONCAT('MAE', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
         }

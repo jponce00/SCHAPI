@@ -27,6 +27,8 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts
 
         public DbSet<LessonStudent> LessonStudents { get; set; }
 
+        public DbSet<Schedule> Schedules { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
