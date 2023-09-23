@@ -25,6 +25,9 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
                 switch (filters.NumFilter)
                 {
                     case 1:
+                        subjects = subjects.Where(s => s.SubjectCode.Contains(filters.TextFilter));
+                        break;
+                    case 2:
                         subjects = subjects.Where(s => s.Name.Contains(filters.TextFilter));
                         break;
                 }

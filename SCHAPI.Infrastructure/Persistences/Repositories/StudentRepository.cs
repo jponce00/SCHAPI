@@ -25,12 +25,15 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
                 switch (filters.NumFilter)
                 {
                     case 1:
-                        students = students.Where(s => s.Name.Contains(filters.TextFilter));
+                        students = students.Where(s => s.StudentCode.Contains(filters.TextFilter));
                         break;
                     case 2:
-                        students = students.Where(s => s.Phone.Contains(filters.TextFilter));
+                        students = students.Where(s => s.Name.Contains(filters.TextFilter));
                         break;
                     case 3:
+                        students = students.Where(s => s.Phone.Contains(filters.TextFilter));
+                        break;
+                    case 4:
                         students = students.Where(s => s.Email.Contains(filters.TextFilter));
                         break;
                 }

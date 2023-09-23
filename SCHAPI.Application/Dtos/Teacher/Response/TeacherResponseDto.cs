@@ -4,6 +4,8 @@
     {
         public int TeacherId { get; set; }
 
+        public string TeacherCode { get; set; }
+
         public string Name { get; set; }
 
         public string Phone { get; set; }

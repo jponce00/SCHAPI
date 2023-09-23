@@ -24,6 +24,9 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
                 switch (filters.NumFilter)
                 {
                     case 1:
+                        classrooms = classrooms.Where(c => c.ClassroomCode.Contains(filters.TextFilter));
+                        break;
+                    case 2:
                         classrooms = classrooms.Where(c => c.Name.Contains(filters.TextFilter));
                         break;
                 }

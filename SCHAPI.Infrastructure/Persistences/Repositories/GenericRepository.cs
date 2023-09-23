@@ -87,7 +87,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
             return query;
         }
 
-        public IQueryable<TDTO> Ordering<TDTO>(BasePaginationRequest request, IQueryable<TDTO> queryable, bool pagination = false) where TDTO : class
+        public IQueryable<TDTO> Ordering<TDTO>(BasePaginationRequest request, IQueryable<TDTO> queryable, bool pagination = true) where TDTO : class
         {
             IQueryable<TDTO> queryDto = request.Order == "desc"
                 ? queryable.OrderBy($"{request.Sort} descending")
