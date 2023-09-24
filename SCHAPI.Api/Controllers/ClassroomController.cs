@@ -57,7 +57,7 @@ namespace SCHAPI.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPut("Remove/{classroomId:int}")]
+        [HttpDelete("Remove/{classroomId:int}")]
         public async Task<IActionResult> RemoveClassroom(int classroomId)
         {
             var response = await _classroomApplication.RemoveClassroom(classroomId);

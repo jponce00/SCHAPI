@@ -22,25 +22,27 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.HasOne(e => e.Schedule)
                 .WithMany()
                 .HasForeignKey(e => e.ScheduleId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(e => e.Teacher)
                 .WithMany()
                 .HasForeignKey(e => e.TeacherId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(e => e.Subject)
                 .WithMany()
                 .HasForeignKey(e => e.SubjectId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(e => e.Classroom)
-                .WithMany()
+                .WithMany(e => e.Lessons)
                 .HasForeignKey(e => e.ClassroomId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.Property(e => e.LessonCode)
                 .HasComputedColumnSql("CONCAT('CLA', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
+
+            builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
     }
 }

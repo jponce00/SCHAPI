@@ -18,7 +18,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
             var response = new BaseEntityResponse<LessonStudent>();
 
-            var studentsOfLesson = GetEntityQuery(sl => sl.LessonId.Equals(lessonId) && sl.AuditDeleteUser == null && sl.AuditDeleteDate == null)
+            var studentsOfLesson = GetEntityQuery(sl => sl.LessonId.Equals(lessonId))
                 .Include(sl => sl.Student)
                 .AsNoTracking();
 

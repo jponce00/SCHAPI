@@ -22,6 +22,8 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
 
             builder.Property(e => e.SubjectCode)
                 .HasComputedColumnSql("CONCAT('MAT', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
+
+            builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
     }
 }

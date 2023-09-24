@@ -24,7 +24,7 @@ namespace SCHAPI.Application.Validators.Student
         private bool IsUnique(int id, string value)
         {
             var model = _context.Students
-                .Where(s => s.AuditDeleteUser == null && s.AuditDeleteDate == null && s.Id != id)
+                .Where(s => s.Id != id)
                 .FirstOrDefault(s =>
                     s.Name.Equals(value) ||
                     s.Phone.Equals(value) ||

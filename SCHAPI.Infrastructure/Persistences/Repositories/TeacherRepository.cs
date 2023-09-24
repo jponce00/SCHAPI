@@ -21,7 +21,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
             var response = new BaseEntityResponse<Teacher>();
 
-            var teachers = GetEntityQuery(t => t.AuditDeleteUser == null && t.AuditDeleteDate == null).AsNoTracking();
+            var teachers = GetEntityQuery().AsNoTracking();
 
             if (filters.NumFilter != null && !string.IsNullOrEmpty(filters.TextFilter))
             {
@@ -58,11 +58,10 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         public override async Task<bool> RemoveAsync(int teacherId)
         {
             var teacher = await _context.Teachers
-                .Include(t => t.Lessons.Where(t => t.AuditDeleteUser == null && t.AuditDeleteDate == null))
+                .Include(t => t.Lessons)
                 .FirstOrDefaultAsync(t => t.Id.Equals(teacherId));
 
-            _context.RemoveRange(teacher!.Lessons);
-            _context.Remove(teacher);
+            _context.Remove(teacher!);
 
             var recordsAffected = await _context.SaveChangesAsync();
 

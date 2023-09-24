@@ -13,11 +13,11 @@ namespace SCHAPI.Application.Validators.Lesson
             _context = context;
 
             RuleFor(l => l.ScheduleId)
-                .Must(s => _context.Schedules.Any(sc => sc.Id == s && sc.AuditDeleteUser == null && sc.AuditDeleteDate == null))
+                .Must(s => _context.Schedules.Any(sc => sc.Id == s))
                     .WithMessage("El horario seleccionado no está disponible.");
 
             RuleFor(l => l.TeacherId)
-                .Must(t => _context.Teachers.Any(te => te.Id == t && te.AuditDeleteUser == null && te.AuditDeleteDate == null))
+                .Must(t => _context.Teachers.Any(te => te.Id == t))
                     .WithMessage("El maestro seleccionado no está disponible")
                 .Must((l, t) => ValidateTeacherLessons(l.Id, t))
                     .WithMessage($"Un maestro solo puede impartir un máximo de {MAX_SUBJECTS_PER_TEACHER} clases.")
@@ -25,11 +25,11 @@ namespace SCHAPI.Application.Validators.Lesson
                     .WithMessage("El maestro seleccionado ya tiene una clase asignada a esta hora.");
 
             RuleFor(l => l.SubjectId)
-                .Must(s => _context.Subjects.Any(su => su.Id == s && su.AuditDeleteUser == null && su.AuditDeleteDate == null))
+                .Must(s => _context.Subjects.Any(su => su.Id == s))
                     .WithMessage("La materia seleccionada no está disponible.");
 
             RuleFor(l => l.ClassroomId)
-                .Must(c => _context.Classrooms.Any(cl => cl.Id == c && cl.AuditDeleteUser == null && cl.AuditDeleteDate == null))
+                .Must(c => _context.Classrooms.Any(cl => cl.Id == c))
                     .WithMessage("El aula seleccionada no está disponible.")
                 .Must((l, c) => ValidateClassroomSchedule(l.Id, c, l.ScheduleId))
                     .WithMessage("Ya existe una clase asignada en esta aula a esta hora.");
@@ -38,7 +38,7 @@ namespace SCHAPI.Application.Validators.Lesson
         private bool ValidateTeacherLessons(int lessonId, int teacherId)
         {
             var result = _context.Lessons
-                .Where(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null && l.Id != lessonId)
+                .Where(l => l.Id != lessonId)
                 .Count(l => l.TeacherId == teacherId);
 
             return result <= MAX_SUBJECTS_PER_TEACHER;
@@ -47,14 +47,14 @@ namespace SCHAPI.Application.Validators.Lesson
         private bool ValidateTeacherSchedule(int lessonId, int teacherId, int scheduleId)
         {
             return !_context.Lessons
-                .Where(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null && l.Id != lessonId)
+                .Where(l => l.Id != lessonId)
                 .Any(l => l.TeacherId == teacherId && l.ScheduleId == scheduleId);
         }
 
         private bool ValidateClassroomSchedule(int lessonId, int classroomId, int scheduleId)
         {
             return !_context.Lessons
-                .Where(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null && l.Id != lessonId)
+                .Where(l => l.Id != lessonId)
                 .Any(l => l.ClassroomId == classroomId && l.ScheduleId == scheduleId);
         }
     }

@@ -18,7 +18,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
             var response = new BaseEntityResponse<Student>();
 
-            var students = GetEntityQuery(s => s.AuditDeleteUser == null && s.AuditDeleteDate == null).AsNoTracking();
+            var students = GetEntityQuery().AsNoTracking();
 
             if (filters.NumFilter != null && !string.IsNullOrEmpty(filters.TextFilter))
             {

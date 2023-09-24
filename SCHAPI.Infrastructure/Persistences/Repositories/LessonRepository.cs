@@ -22,7 +22,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
             var response = new BaseEntityResponse<Lesson>();
 
-            var lessons = GetEntityQuery(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null)
+            var lessons = GetEntityQuery()
                 .Include(l => l.Schedule)
                 .Include(l => l.Teacher)
                 .Include(l => l.Subject)
@@ -64,7 +64,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         public Task<IEnumerable<Lesson>> ListSelectLessons()
         {
             return _context.Lessons
-                .Where(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null && l.State.Equals((int)StateTypes.Active))
+                .Where(l => l.State.Equals((int)StateTypes.Active))
                 .Include(l => l.Subject)
                 .Include(l => l.Schedule)
                 .AsNoTracking()

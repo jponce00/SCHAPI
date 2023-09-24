@@ -18,7 +18,7 @@ namespace SCHAPI.Application.Validators.Classroom
         private bool IsUnique(int id, string value)
         {
             var model = _context.Classrooms
-                .Where(cl => cl.AuditDeleteUser == null && cl.AuditDeleteDate == null && cl.Id != id)
+                .Where(cl => cl.Id != id)
                 .FirstOrDefault(cl =>
                     cl.Name.Equals(value));
 

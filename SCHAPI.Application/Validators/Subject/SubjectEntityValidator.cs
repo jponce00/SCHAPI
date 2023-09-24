@@ -18,7 +18,7 @@ namespace SCHAPI.Application.Validators.Subject
         private bool IsUnique(int id, string value)
         {
             var model = _context.Subjects
-                .Where(s => s.AuditDeleteUser == null && s.AuditDeleteDate == null && s.Id != id)
+                .Where(s => s.Id != id)
                 .FirstOrDefault(s =>
                     s.Name.Equals(value));
 

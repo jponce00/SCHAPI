@@ -28,6 +28,8 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
 
             builder.Property(e => e.TeacherCode)
                 .HasComputedColumnSql("CONCAT('MAE', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
+
+            builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
     }
 }

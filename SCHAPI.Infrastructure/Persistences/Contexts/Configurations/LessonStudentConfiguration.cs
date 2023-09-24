@@ -22,6 +22,8 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
                 .WithMany()
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
     }
 }

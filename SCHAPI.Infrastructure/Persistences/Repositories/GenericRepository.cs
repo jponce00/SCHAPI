@@ -24,7 +24,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             var getAll = await _entity
-                .Where(e => e.State.Equals((int)StateTypes.Active) && e.AuditDeleteUser == null && e.AuditDeleteDate == null)
+                .Where(e => e.State.Equals((int)StateTypes.Active))
                 .AsNoTracking().ToListAsync();
 
             return getAll;

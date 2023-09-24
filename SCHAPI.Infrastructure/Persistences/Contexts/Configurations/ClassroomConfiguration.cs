@@ -16,12 +16,10 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.Property(e => e.Name)
                 .HasMaxLength(100);
 
-            builder.HasMany(e => e.Lessons)
-                .WithOne(e => e.Classroom)
-                .HasForeignKey(e => e.ClassroomId);
-
             builder.Property(e => e.ClassroomCode)
                 .HasComputedColumnSql("CONCAT('AUL', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
+
+            builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
 
             builder.Property(e => e.EndHour)
                 .HasColumnType("time");
+
+            builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
     }
 }
