@@ -10,6 +10,8 @@ namespace SCHAPI.Application.Interfaces
     {
         Task<BaseResponse<BaseEntityResponse<LessonResponseDto>>> ListLessons(BaseFiltersRequest filters);
 
+        Task<BaseResponse<IEnumerable<LessonSelectResponseDto>>> ListSelectLessons();
+
         Task<BaseResponse<LessonResponseDto>> LessonById(int lessonId);
 
         Task<BaseResponse<bool>> RegisterLesson(LessonRequestDto requestDto);

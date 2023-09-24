@@ -22,6 +22,12 @@ namespace SCHAPI.Application.Mappers
                 .ReverseMap();
 
             CreateMap<LessonRequestDto, Lesson>();
+
+            CreateMap<Lesson, LessonSelectResponseDto>()
+                .ForMember(l => l.LessonId, l => l.MapFrom(y => y.Id))
+                .ForMember(l => l.StartHour, l => l.MapFrom(y => y.Schedule.StartHour.ToString()))
+                .ForMember(l => l.SubjectName, l => l.MapFrom(y => y.Subject.Name))
+                .ReverseMap();
         }
     }
 }

@@ -63,6 +63,37 @@ namespace SCHAPI.Application.Services
             return response;
         }
 
+        public async Task<BaseResponse<IEnumerable<LessonSelectResponseDto>>> ListSelectLessons()
+        {
+            var response = new BaseResponse<IEnumerable<LessonSelectResponseDto>>();
+
+            try
+            {
+                var lessons = await _unitOfWork.Lesson.ListSelectLessons();
+
+                if (lessons != null)
+                {
+                    response.IsSuccess = true;
+                    response.Data = _mapper.Map<IEnumerable<LessonSelectResponseDto>>(lessons);
+                    response.Message = ReplyMessage.MESSAGE_QUERY;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+
+                WatchLogger.Log(ex.Message);
+            }
+
+            return response;
+        }
+
         public async Task<BaseResponse<LessonResponseDto>> LessonById(int lessonId)
         {
             var response = new BaseResponse<LessonResponseDto>();

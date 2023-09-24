@@ -19,6 +19,8 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
 
         public ILessonStudentRepository LessonStudent { get; private set; }
 
+        public IScheduleRepository Schedule { get; private set; }
+
         public UnitOfWork(SCHAPIContext context)
         {
             _context = context;
@@ -29,6 +31,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
             Classroom = new ClassroomRepository(_context);
             Lesson = new LessonRepository(_context);
             LessonStudent = new LessonStudentRepository(_context);
+            Schedule = new ScheduleRepository(_context);
         }
 
         public void Dispose()

@@ -27,6 +27,7 @@ namespace SCHAPI.Application.Extensions
             services.AddScoped<ISubjectApplication, SubjectApplication>();
             services.AddScoped<IClassroomApplication, ClassroomApplication>();
             services.AddScoped<ILessonApplication, LessonApplication>();
+            services.AddScoped<IScheduleApplication, ScheduleApplication>();
 
             return services;
         }

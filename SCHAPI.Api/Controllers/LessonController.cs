@@ -25,6 +25,14 @@ namespace SCHAPI.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("Select")]
+        public async Task<IActionResult> ListSelectLessons()
+        {
+            var response = await _lessonApplication.ListSelectLessons();
+
+            return Ok(response);
+        }
+
         [HttpGet("{lessonId:int}")]
         public async Task<IActionResult> LessonById(int lessonId)
         {

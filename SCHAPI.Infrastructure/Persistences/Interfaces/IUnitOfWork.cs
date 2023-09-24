@@ -14,6 +14,8 @@
 
         ILessonStudentRepository LessonStudent { get; }
 
+        IScheduleRepository Schedule { get; }
+
         void SaveChanges();
 
         Task SaveChangesAsync();

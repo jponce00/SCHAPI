@@ -9,5 +9,7 @@
         public string Phone { get; set; }
 
         public string Email { get; set; }
+
+        public ICollection<LessonStudent> Lessons { get; set; } = new HashSet<LessonStudent>();
     }
 }
