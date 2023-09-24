@@ -9,8 +9,12 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
 {
     public class ClassroomRepository : GenericRepository<Classroom>, IClassroomRepository
     {
-        public ClassroomRepository(SCHAPIContext context) : base(context)
+        private readonly SCHAPIContext _context;
+
+        public ClassroomRepository(SCHAPIContext context)
+            : base(context)
         {
+            _context = context;
         }
 
         public async Task<BaseEntityResponse<Classroom>> ListClassrooms(BaseFiltersRequest filters)
@@ -43,6 +47,20 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
             response.Items = await Ordering(filters, classrooms).ToListAsync();
 
             return response;
+        }
+
+        public override async Task<bool> RemoveAsync(int id)
+        {
+            var classroom = await _context.Classrooms
+                .Include(cl => cl.Lessons.Where(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null))
+                .FirstOrDefaultAsync(cl => cl.Id.Equals(id));
+
+            _context.RemoveRange(classroom!.Lessons);
+            _context.Remove(classroom);
+
+            var recordsAffected = await _context.SaveChangesAsync();
+
+            return recordsAffected > 0;
         }
     }
 }

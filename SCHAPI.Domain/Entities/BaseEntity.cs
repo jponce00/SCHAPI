@@ -1,6 +1,8 @@
-﻿namespace SCHAPI.Domain.Entities
+﻿using SCHAPI.Domain.Interfaces;
+
+namespace SCHAPI.Domain.Entities
 {
-    public class BaseEntity
+    public class BaseEntity : IDeleteAuditable
     {
         public int Id { get; set; }
 

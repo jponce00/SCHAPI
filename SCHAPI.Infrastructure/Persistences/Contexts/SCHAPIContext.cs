@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SCHAPI.Domain.Entities;
+using SCHAPI.Infrastructure.Persistences.Contexts.Interceptors;
 using System.Reflection;
 
 namespace SCHAPI.Infrastructure.Persistences.Contexts
@@ -28,6 +29,11 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts
         public DbSet<LessonStudent> LessonStudents { get; set; }
 
         public DbSet<Schedule> Schedules { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new DeleteAuditableInterceptor());
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

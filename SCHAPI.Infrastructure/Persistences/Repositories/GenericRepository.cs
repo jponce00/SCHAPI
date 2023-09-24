@@ -62,14 +62,11 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
             return recordsAffected > 0;
         }
 
-        public async Task<bool> RemoveAsync(int id)
+        public virtual async Task<bool> RemoveAsync(int id)
         {
             T entity = await GetByIdAsync(id);
 
-            entity!.AuditDeleteUser = 1;
-            entity!.AuditDeleteDate = DateTime.Now;
-
-            _context.Update(entity);
+            _context.Remove(entity);
 
             var recordsAffected = await _context.SaveChangesAsync();
             return recordsAffected > 0;

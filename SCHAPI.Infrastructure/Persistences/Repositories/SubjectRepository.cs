@@ -9,9 +9,12 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
 {
     public class SubjectRepository : GenericRepository<Subject>, ISubjectRepository
     {
+        private readonly SCHAPIContext _context;
+
         public SubjectRepository(SCHAPIContext context)
             : base(context)
         {
+            _context = context;
         }
 
         public async Task<BaseEntityResponse<Subject>> ListSubjects(BaseFiltersRequest filters)
@@ -44,6 +47,20 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
             response.Items = await Ordering(filters, subjects).ToListAsync();
 
             return response;
+        }
+
+        public override async Task<bool> RemoveAsync(int id)
+        {
+            var subject = await _context.Subjects
+                .Include(s => s.Lessons.Where(l => l.AuditDeleteUser == null && l.AuditDeleteDate == null))
+                .FirstOrDefaultAsync(s => s.Id.Equals(id));
+
+            _context.RemoveRange(subject!.Lessons);
+            _context.Remove(subject);
+
+            var recordsAffected = await _context.SaveChangesAsync();
+
+            return recordsAffected > 0;
         }
     }
 }
