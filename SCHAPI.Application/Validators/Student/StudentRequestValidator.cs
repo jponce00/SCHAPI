@@ -18,7 +18,8 @@ namespace SCHAPI.Application.Validators.Student
 
             RuleFor(s => s.Email)
                 .NotNull().WithMessage("El campo Correo Electrónico no puede ser nulo.")
-                .NotEmpty().WithMessage("El campo Correo Electrónico no puede ser vacío.");
+                .NotEmpty().WithMessage("El campo Correo Electrónico no puede ser vacío.")
+                .EmailAddress().WithMessage("Debe ingresar un Correo Electrónico válido.");
         }
     }
 }

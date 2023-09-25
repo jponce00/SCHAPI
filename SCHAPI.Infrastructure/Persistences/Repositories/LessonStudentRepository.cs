@@ -14,11 +14,14 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         {
         }
 
-        public async Task<BaseEntityResponse<LessonStudent>> ListStudentsOfLesson(BaseFiltersRequest filters, int lessonId)
+        public async Task<BaseEntityResponse<LessonStudent>> ListLessonStudents(BaseFiltersRequest filters)
         {
             var response = new BaseEntityResponse<LessonStudent>();
 
-            var studentsOfLesson = GetEntityQuery(sl => sl.LessonId.Equals(lessonId))
+            var lessonStudents = GetEntityQuery()
+                .Include(sl => sl.Lesson).ThenInclude(ls => ls.Subject)
+                .Include(sl => sl.Lesson).ThenInclude(ls => ls.Schedule)
+                .Include(sl => sl.Lesson).ThenInclude(ls => ls.Classroom)
                 .Include(sl => sl.Student)
                 .AsNoTracking();
 
@@ -27,20 +30,23 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
                 switch (filters.NumFilter)
                 {
                     case 1:
-                        studentsOfLesson = studentsOfLesson.Where(sl => sl.Student.Name.Contains(filters.TextFilter));
+                        lessonStudents = lessonStudents.Where(sl => sl.LessonId == Convert.ToInt32(filters.TextFilter));
+                        break;
+                    case 2:
+                        lessonStudents = lessonStudents.Where(ls => ls.StudentId == Convert.ToInt32(filters.TextFilter));
                         break;
                 }
             }
 
             if (filters.StateFilter != null)
             {
-                studentsOfLesson = studentsOfLesson.Where(sl => sl.State.Equals(filters.StateFilter));
+                lessonStudents = lessonStudents.Where(sl => sl.State.Equals(filters.StateFilter));
             }
 
             filters.Sort ??= "Id";
 
-            response.TotalRecords = await studentsOfLesson.CountAsync();
-            response.Items = await Ordering(filters, studentsOfLesson).ToListAsync();
+            response.TotalRecords = await lessonStudents.CountAsync();
+            response.Items = await Ordering(filters, lessonStudents).ToListAsync();
 
             return response;
         }

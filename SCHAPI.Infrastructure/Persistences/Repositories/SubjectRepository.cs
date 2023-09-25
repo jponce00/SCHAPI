@@ -52,7 +52,7 @@ namespace SCHAPI.Infrastructure.Persistences.Repositories
         public override async Task<bool> RemoveAsync(int id)
         {
             var subject = await _context.Subjects
-                .Include(s => s.Lessons)
+                .Include(s => s.Lessons).ThenInclude(l => l.Students)
                 .FirstOrDefaultAsync(s => s.Id.Equals(id));
 
             _context.Remove(subject!);

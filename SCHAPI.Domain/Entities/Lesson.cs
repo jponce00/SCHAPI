@@ -19,5 +19,7 @@
         public int ClassroomId { get; set; }
 
         public Classroom Classroom { get; set; }
+
+        public ICollection<LessonStudent> Students { get; set; } = new HashSet<LessonStudent>();
     }
 }

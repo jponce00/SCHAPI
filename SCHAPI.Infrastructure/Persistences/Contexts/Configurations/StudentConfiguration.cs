@@ -22,10 +22,6 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
             builder.Property(e => e.Email)
                 .HasMaxLength(100);
 
-            builder.HasMany(e => e.Lessons)
-                .WithOne(e => e.Student)
-                .HasForeignKey(e => e.StudentId);
-
             builder.Property(e => e.StudentCode)
                 .HasComputedColumnSql("CONCAT('ALU', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
 

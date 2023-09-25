@@ -6,7 +6,7 @@ namespace SCHAPI.Application.Validators.Lesson
     public class LessonEntityValidator : AbstractValidator<Domain.Entities.Lesson>
     {
         private readonly SCHAPIContext _context;
-        private const int MAX_SUBJECTS_PER_TEACHER = 4;
+        private const int MAX_LESSONS_PER_TEACHER = 4;
 
         public LessonEntityValidator(SCHAPIContext context)
         {
@@ -20,7 +20,7 @@ namespace SCHAPI.Application.Validators.Lesson
                 .Must(t => _context.Teachers.Any(te => te.Id == t))
                     .WithMessage("El maestro seleccionado no está disponible")
                 .Must((l, t) => ValidateTeacherLessons(l.Id, t))
-                    .WithMessage($"Un maestro solo puede impartir un máximo de {MAX_SUBJECTS_PER_TEACHER} clases.")
+                    .WithMessage($"Un maestro solo puede impartir un máximo de {MAX_LESSONS_PER_TEACHER} clases.")
                 .Must((l, t) => ValidateTeacherSchedule(l.Id, t, l.ScheduleId))
                     .WithMessage("El maestro seleccionado ya tiene una clase asignada a esta hora.");
 
@@ -41,7 +41,7 @@ namespace SCHAPI.Application.Validators.Lesson
                 .Where(l => l.Id != lessonId)
                 .Count(l => l.TeacherId == teacherId);
 
-            return result <= MAX_SUBJECTS_PER_TEACHER;
+            return result < MAX_LESSONS_PER_TEACHER;
         }
 
         private bool ValidateTeacherSchedule(int lessonId, int teacherId, int scheduleId)

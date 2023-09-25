@@ -14,14 +14,14 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
                 .IsUnique();
 
             builder.HasOne(e => e.Lesson)
-                .WithMany()
+                .WithMany(e => e.Students)
                 .HasForeignKey(e => e.LessonId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(e => e.Student)
-                .WithMany()
+                .WithMany(e => e.Lessons)
                 .HasForeignKey(e => e.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
