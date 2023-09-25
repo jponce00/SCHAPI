@@ -40,7 +40,7 @@ namespace SCHAPI.Application.Services
             {
                 var teachers = await _unitOfWork.Teacher.ListTeachers(filters);
 
-                if (teachers != null)
+                if (teachers.Items!.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<BaseEntityResponse<TeacherResponseDto>>(teachers);
@@ -71,7 +71,7 @@ namespace SCHAPI.Application.Services
             {
                 var teachers = await _unitOfWork.Teacher.GetAllAsync();
 
-                if (teachers != null)
+                if (teachers.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<IEnumerable<TeacherSelectResponseDto>>(teachers);

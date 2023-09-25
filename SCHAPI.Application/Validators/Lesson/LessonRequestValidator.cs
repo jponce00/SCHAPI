@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SCHAPI.Application.Dtos.Lesson.Request;
+using SCHAPI.Utilities.Static;
 
 namespace SCHAPI.Application.Validators.Lesson
 {
@@ -18,6 +19,10 @@ namespace SCHAPI.Application.Validators.Lesson
 
             RuleFor(l => l.ClassroomId)
                 .NotNull().WithMessage("Debe seleccionar un aula de clases.");
+
+            RuleFor(t => t.State)
+                .InclusiveBetween((int)StateTypes.Inactive, (int)StateTypes.Active)
+                    .WithMessage("Debe seleccionar un estado correcto.");
         }
     }
 }

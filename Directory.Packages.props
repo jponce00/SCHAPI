@@ -1,0 +1,20 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DotNetReferenceVersion>6.0.22</DotNetReferenceVersion>
+		<AutoMapperReference>12.0.1</AutoMapperReference>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageVersion Include="AutoMapper" Version="$(AutoMapperReference)" />
+		<PackageVersion Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="$(AutoMapperReference)" />
+		<PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="$(DotNetReferenceVersion)" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="$(DotNetReferenceVersion)" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="$(DotNetReferenceVersion)" />
+		<PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageVersion Include="System.Linq.Dynamic.Core" Version="1.3.5" />
+		<PackageVersion Include="WatchDog.NET" Version="1.4.10" />
+	</ItemGroup>
+</Project>

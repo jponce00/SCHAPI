@@ -27,7 +27,7 @@ namespace SCHAPI.Application.Services
             {
                 var schedules = await _unitOfWork.Schedule.GetAllAsync();
 
-                if (schedules != null)
+                if (schedules.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<IEnumerable<ScheduleSelectResponseDto>>(schedules);

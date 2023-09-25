@@ -40,7 +40,7 @@ namespace SCHAPI.Application.Services
             {
                 var lessons = await _unitOfWork.Lesson.ListLessons(filters);
 
-                if (lessons != null)
+                if (lessons.Items!.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<BaseEntityResponse<LessonResponseDto>>(lessons);
@@ -71,7 +71,7 @@ namespace SCHAPI.Application.Services
             {
                 var lessons = await _unitOfWork.Lesson.ListSelectLessons();
 
-                if (lessons != null)
+                if (lessons.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<IEnumerable<LessonSelectResponseDto>>(lessons);

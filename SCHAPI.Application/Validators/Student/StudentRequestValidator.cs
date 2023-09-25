@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using SCHAPI.Application.Dtos.Student.Request;
-using SCHAPI.Infrastructure.Persistences.Contexts;
+using SCHAPI.Utilities.Static;
 
 namespace SCHAPI.Application.Validators.Student
 {
@@ -20,6 +20,10 @@ namespace SCHAPI.Application.Validators.Student
                 .NotNull().WithMessage("El campo Correo Electrónico no puede ser nulo.")
                 .NotEmpty().WithMessage("El campo Correo Electrónico no puede ser vacío.")
                 .EmailAddress().WithMessage("Debe ingresar un Correo Electrónico válido.");
+
+            RuleFor(t => t.State)
+                .InclusiveBetween((int)StateTypes.Inactive, (int)StateTypes.Active)
+                    .WithMessage("Debe seleccionar un estado correcto.");
         }
     }
 }

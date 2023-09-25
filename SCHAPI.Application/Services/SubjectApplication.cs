@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore.Query;
 using SCHAPI.Application.Commons.Bases;
 using SCHAPI.Application.Dtos.Subject.Request;
 using SCHAPI.Application.Dtos.Subject.Response;
@@ -41,7 +40,7 @@ namespace SCHAPI.Application.Services
             {
                 var subjects = await _unitOfWork.Subject.ListSubjects(filters);
 
-                if (subjects != null)
+                if (subjects.Items!.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<BaseEntityResponse<SubjectResponseDto>>(subjects);
@@ -72,7 +71,7 @@ namespace SCHAPI.Application.Services
             {
                 var subjects = await _unitOfWork.Subject.GetAllAsync();
 
-                if (subjects != null)
+                if (subjects.Any())
                 {
                     response.IsSuccess = true;
                     response.Data = _mapper.Map<IEnumerable<SubjectSelectResponseDto>>(subjects);
