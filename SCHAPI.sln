@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCHAPI.Domain", "SCHAPI.Domain\SCHAPI.Domain.csproj", "{55210DBE-D22C-4820-953C-EC6BA8484809}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCHAPI.Domain", "SCHAPI.Domain\SCHAPI.Domain.csproj", "{55210DBE-D22C-4820-953C-EC6BA8484809}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCHAPI.Infrastructure", "SCHAPI.Infrastructure\SCHAPI.Infrastructure.csproj", "{895942DB-4653-41AF-B138-30F44C06DA8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCHAPI.Infrastructure", "SCHAPI.Infrastructure\SCHAPI.Infrastructure.csproj", "{895942DB-4653-41AF-B138-30F44C06DA8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCHAPI.Application", "SCHAPI.Application\SCHAPI.Application.csproj", "{C2EBB5DD-546C-4119-8C24-3706113BCFEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCHAPI.Application", "SCHAPI.Application\SCHAPI.Application.csproj", "{C2EBB5DD-546C-4119-8C24-3706113BCFEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCHAPI.Utilities", "SCHAPI.Utilities\SCHAPI.Utilities.csproj", "{4621DA7B-D1A2-44B6-94E9-197D05A97D53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCHAPI.Utilities", "SCHAPI.Utilities\SCHAPI.Utilities.csproj", "{4621DA7B-D1A2-44B6-94E9-197D05A97D53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCHAPI.Api", "SCHAPI.Api\SCHAPI.Api.csproj", "{6FBC03A1-07E3-4758-B20F-EA2D0E0B1DCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SCHAPI.Api", "SCHAPI.Api\SCHAPI.Api.csproj", "{6FBC03A1-07E3-4758-B20F-EA2D0E0B1DCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

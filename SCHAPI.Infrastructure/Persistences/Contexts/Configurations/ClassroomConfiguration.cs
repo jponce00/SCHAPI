@@ -17,7 +17,7 @@ namespace SCHAPI.Infrastructure.Persistences.Contexts.Configurations
                 .HasMaxLength(100);
 
             builder.Property(e => e.ClassroomCode)
-                .HasComputedColumnSql("CONCAT('AUL', RIGHT('000' + CAST(Id AS VARCHAR), 3))");
+                .HasComputedColumnSql("CONCAT('AU', CAST(Id AS VARCHAR))");
 
             builder.HasQueryFilter(e => e.AuditDeleteUser == null && e.AuditDeleteDate == null);
         }
